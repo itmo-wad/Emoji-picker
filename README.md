@@ -13,7 +13,7 @@ If multiple emoji exists, you'll get multiple sentence with different combinatio
 
 ## Feature ##
 - [x] NodeJS RestAPI backend
-  - [ ] `/request`
+  - [x] `/request`
         Method GET:  
         - parameter: ?input="text with requested :emoji:"
         - return: the sentence formated with emoji
@@ -22,11 +22,14 @@ If multiple emoji exists, you'll get multiple sentence with different combinatio
         - parameter: word="word you want to get a synonym"
                      db="database where you want to retrieve the word"
         - return: top 3 most common synonym of the given word
-  - [ ] `/search`
+  - [x] `/search`
         Method GET:  
         - parameter: word="word you want to get the emoji"
                      db="database where you want to retrieve the emoji"
         - return: top 3 most common emoji of the given word
+  - [x] `/list`
+        Method GET:
+        - return: list of all available emojis
 - [ ] Communication with TelegramAPI
   - [ ] Authenticate with TelegramBot
   - [ ] Retrieve text from TelegramBot
@@ -47,20 +50,7 @@ If multiple emoji exists, you'll get multiple sentence with different combinatio
     - Framework
       - ExpressJS
       - AxiosJS
-    - Testing
-      - Jest ?
 - Stage 2
   - RESTFul API
   - Regex
-  - Docker
-- Stage 3
-  - SCRUM method
-
-#### Dev-Ops
-- Stage 1
-  - Operating System
-    - Linux
-  - CI/CD
-    - Jenkins ?
-  - Host server
-    - Nginx ?
+  

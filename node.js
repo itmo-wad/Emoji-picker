@@ -1,9 +1,9 @@
 'use strict';
 const express = require('express'),
-  port = 5000,
-  app = express(),
-  bodyParser = require('body-parser'),
-  session = require('express-session');
+      port = 5000,
+      app = express(),
+      bodyParser = require('body-parser'),
+      session = require('express-session');
 
 app.use(bodyParser.json());
 app.use(require("cookie-parser")());

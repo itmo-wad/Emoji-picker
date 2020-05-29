@@ -1,5 +1,6 @@
 'use strict';
 const emoji_db = require('../modules/emoji.js');
+const local_database = emoji_db.local_database();
 
 String.prototype.replaceAt = function(index, replacement) {
   return this.substr(0, index) + replacement + this.substr(index + replacement.length);
@@ -19,6 +20,9 @@ exports.request = function (req, res, next) {
       const tmp = input.length;
 
       emoji = `${emoji_db.transform(word[0])}`;
+      if (emoji[0] === ':')
+        emoji = (local_database[emoji.slice(1, -1)] === undefined ? emoji : local_database[emoji.slice(1, -1)]);
+
       input = input.substring(0, word.index - prev) + emoji + input.substring(word.index - prev + word[0].length);
       prev += tmp - input.length;
     });

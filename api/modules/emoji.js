@@ -1,5 +1,6 @@
 'use strict';
 const emoji = require('discord-emoji');
+const database = require("./emoji.json");
 
 exports.parser = function (input) {
   const reg = new RegExp(/\:\w+\:/ig);
@@ -22,8 +23,16 @@ exports.transform = function (word) {
       };
     };
   };
-  return (needle === '' ? word.slice(1, -1) : needle);
+  return (needle === word.slice(1, -1) ? word : needle);
 };
+
+exports.local_database = function () {
+  let db = {};
+
+  for (let index in database)
+    db[`${database[index].aliases}`] = `${database[index].emoji}`;
+  return db;
+}
 
 exports.list = function () {
   let emojis = '';

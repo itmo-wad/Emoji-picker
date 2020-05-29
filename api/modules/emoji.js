@@ -2,37 +2,37 @@
 const emoji = require('discord-emoji');
 
 exports.parser = function (input) {
-    const reg = new RegExp(/\:\w+\:/ig);
-    const words = [...input.matchAll(reg)];
+  const reg = new RegExp(/\:\w+\:/ig);
+  const words = [...input.matchAll(reg)];
 
-    return words;
+  return words;
 };
 
 exports.transform = function (word) {
-    let needle = word.slice(1, -1);
+  let needle = word.slice(1, -1);
 
-    loop_key: for (let key in emoji) {
-	loop_sub: for (let sub_key in emoji[key]) {
-	    if (sub_key === needle && key !== 'emoji') {
-		needle = emoji[key][sub_key];
-		break loop_key;
-	    } else if (sub_key === needle && key === 'emoji') {
-		needle = emoji[key][sub_key];
-		continue loop_key;
-	    };
-	};
+  loop_key: for (let key in emoji) {
+    loop_sub: for (let sub_key in emoji[key]) {
+      if (sub_key === needle && key !== 'emoji') {
+        needle = emoji[key][sub_key];
+        break loop_key;
+      } else if (sub_key === needle && key === 'emoji') {
+        needle = emoji[key][sub_key];
+        continue loop_key;
+      };
     };
-    return (needle === '' ? word.slice(1, -1) : needle);
+  };
+  return (needle === '' ? word.slice(1, -1) : needle);
 };
 
 exports.list = function () {
-    let emojis = '';
+  let emojis = '';
 
-    for (let key in emoji) {
-	if (key !== 'emoji') {
-	    emojis += Object.keys(emoji[key]).join(' ').replace(/(\w+)/g, match => `:${match}:`);
-	};
+  for (let key in emoji) {
+    if (key !== 'emoji') {
+      emojis += Object.keys(emoji[key]).join(' ').replace(/(\w+)/g, match => `:${match}:`);
     };
-    emojis += Object.keys(emoji['emoji']).join(' ');
-    return emojis;
+  };
+  emojis += Object.keys(emoji['emoji']).join(' ');
+  return emojis;
 };

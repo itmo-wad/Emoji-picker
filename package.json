@@ -10,6 +10,7 @@
     "discord-emoji": "^1.1.1",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "node-telegram-bot-api": "^0.50.0",
     "nodemon": "^2.0.3"
   },
   "devDependencies": {},

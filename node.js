@@ -1,7 +1,6 @@
 'use strict';
-const express = require('express'),
-      port = 5000,
-      app = express(),
+const port = 5000,
+      app = require('express')(),
       bodyParser = require('body-parser'),
       session = require('express-session');
 
@@ -16,7 +15,8 @@ app.use(session({
   saveUninitialized: true
 }));
 
-const routes = require('./api/routes/routes');
+const routes = require('./api/routes/routes'),
+      telegramBot = require('./api/api/telegram');
 
 routes(app);
 

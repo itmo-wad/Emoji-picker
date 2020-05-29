@@ -2,8 +2,8 @@
 const controller = require('../controllers/controller');
 
 module.exports = function (app) {
-  app.route('/').get(controller.request);
-  app.route('/list').get(controller.list);
-  app.route('/search').get(controller.search);
-  app.route('/synonym').get(controller.synonym);
+    app.route('/').get(controller.request);
+    app.route('/list').get(controller.list);
+    app.route('/search').get(controller.search);
+    app.route('/synonym').get(controller.synonym);
 };

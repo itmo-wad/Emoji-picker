@@ -5,7 +5,7 @@ String.prototype.replaceAt = function(index, replacement) {
   return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 }
 
-exports.request = function (req, res) {
+exports.request = function (req, res, next) {
   let emoji = "";
   let input = "";
   let prev = 0;
@@ -26,7 +26,7 @@ exports.request = function (req, res) {
   }
 };
 
-exports.search = function (req, res) {
+exports.search = function (req, res, next) {
   let param = req.query;
 
   if (param.word === undefined) {
@@ -36,11 +36,11 @@ exports.search = function (req, res) {
   };
 };
 
-exports.list = function (req, res) {
+exports.list = function (req, res, next) {
   res.status(200).send(emoji_db.list());
 };
 
-exports.synonym = function (req, res) {
+exports.synonym = function (req, res, next) {
   let param = req.query;
 
   if (param.db === undefined || param.word === undefined) {

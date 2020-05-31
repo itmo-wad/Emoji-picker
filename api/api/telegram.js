@@ -1,45 +1,33 @@
 'use strict';
 process.env.NTBA_FIX_319 = 1;
-const emoji_db = require('../modules/emoji.js');
-const TelegramBot = require('node-telegram-bot-api');
 
-{
+const Emojis = require('../modules/emoji.js'),
+      TelegramBot = require('node-telegram-bot-api'),
+      url = "https://risibank.fr/cache/stickers/d899/89948-full.png";
+
+function emojiser(input = undefined) {
+  Emojis.parser(input).forEach(word => input = input.replace(word[0], (local_database[word[0].slice(1, -1)] || word[0])));
+  return input.slice(1, -1)
+}
+
+(function () {
   const token = '1219145096:AAG9WWHVSrXUOM41hD6wOSBaVgPVrCORrMM';
   const bot = new TelegramBot(token, {polling: true});
 
   bot.onText(/\/transform/, (message) => {
     bot.sendMessage(message.chat.id, emojiser(`"${message.text.substr(11)}"`));
   });
+
   bot.onText(/\/list/, (message) => {
     bot.sendMessage(message.chat.id, "sah", {
     "reply_markup": {
         "keyboard": [["Sample text", "Second sample"],   ["Keyboard"], ["I'm robot"]]
         }
     });
-    test()
-    //bot.sendMessage(message.chat.id, "fuck"/*emoji_db.list())*/);
+    //bot.sendMessage(message.chat.id, "fuck"/*emojis.local_database())*/);
   });
+
   bot.onText(/\/test/, (message) => {
-    bot.sendPhoto(message.chat.id, "https://risibank.fr/cache/stickers/d899/89948-full.png");
+    bot.sendPhoto(message.chat.id, url);
   });
-}
-
-function emojiser(input) {
-  let prev = 0;
-  let emoji = "";
-
-  emoji_db.parser(input).forEach(word => {
-    const tmp = input.length;
-
-    emoji = `${emoji_db.transform(word[0])}`;
-    input = input.substring(0, word.index - prev) + emoji + input.substring(word.index - prev + word[0].length);
-    prev += tmp - input.length;
-  });
-  return input.slice(1, -1)
-}
-
-function test(){
-  const e = require('discord-emoji');
-  for (let k in e)
-    console.log(Object.keys(e[k]))
-}
+}());

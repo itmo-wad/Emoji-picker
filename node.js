@@ -9,14 +9,14 @@ app.use(require("cookie-parser")());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(session({
-  secret: 'My secret is ITMO WAD',
-  name: 'ITMO-WAD/Emoji-picker',
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  name: 'ITMO-WAD/Emoji-picker',
+  secret: 'My secret is ITMO WAD'
 }));
 
 const routes = require('./api/routes/routes'),
-      telegramBot = require('./api/api/telegram');
+      TelegramBot = require('./api/api/telegram');
 
 routes(app);
 

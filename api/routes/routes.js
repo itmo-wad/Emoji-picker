@@ -1,9 +1,9 @@
 'use strict';
-const controller = require('../controllers/controller');
+const Controller = require('../controllers/controller');
 
 module.exports = function (app) {
-  app.route('/').get(controller.request);
-  app.route('/list').get(controller.list);
-  app.route('/search').get(controller.search);
-  app.route('/synonym').get(controller.synonym);
+  app.route('/').get(Controller.request);
+  app.route('/list').get(Controller.list);
+  app.route('/search').get(Controller.search);
+  /*app.route('/synonym').get(Controller.synonym);*/
 };

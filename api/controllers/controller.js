@@ -1,49 +1,36 @@
 'use strict';
-const emoji_db = require('../modules/emoji.js');
-const local_database = emoji_db.local_database();
+const Emojis = require('../modules/emoji.js');
 
 String.prototype.replaceAt = function(index, replacement) {
   return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 }
 
 exports.request = function (req, res, next) {
-  let emoji = "";
-  let input = "";
-  let prev = 0;
-  let param = req.query;
+  let input = (req.query.input || undefined);
 
-  if (param.input === undefined) {
-    res.status(400).send(`Missing parameter "?input="`);
+  if (input === undefined || input === `""` || input[0] !== '"') {
+    res.status(400).send(`Missing parameter '?input=""'`);
   } else {
-    input = param.input;
-    emoji_db.parser(input).forEach(word => {
-      const tmp = input.length;
-
-      emoji = `${emoji_db.transform(word[0])}`;
-      if (emoji[0] === ':')
-        emoji = (local_database[emoji.slice(1, -1)] === undefined ? emoji : local_database[emoji.slice(1, -1)]);
-
-      input = input.substring(0, word.index - prev) + emoji + input.substring(word.index - prev + word[0].length);
-      prev += tmp - input.length;
-    });
+    Emojis.parser(input).forEach(word => input = input.replace(word[0], (Emojis.local_database()[word[0].slice(1, -1)] || word[0])));
     res.status(200).send(`${input.slice(1, -1)}`);
   }
 };
 
 exports.search = function (req, res, next) {
-  let param = req.query;
+  let word = (req.query.word || undefined);
 
-  if (param.word === undefined) {
-    res.status(400).send(`Missing parameter '?word='`);
+  if (word === undefined || word === `""` || word[0] !== '"') {
+    res.status(400).send(`Missing parameter '?word=""'`);
   } else {
-    res.status(200).send(emoji_db.transform(param.word));
+    res.status(200).send((Emojis.local_database()[word.slice(1, -1)] || word.slice(1, -1)));
   };
 };
 
 exports.list = function (req, res, next) {
-  res.status(200).send(emoji_db.list());
+  res.status(200).json(Emojis.local_database());
 };
 
+/*
 exports.synonym = function (req, res, next) {
   let param = req.query;
 
@@ -61,3 +48,4 @@ exports.synonym = function (req, res, next) {
   };
   res.status(200).send(`${JSON.stringify(param.word)} & ${JSON.stringify(param.db)}`);
 };
+*/

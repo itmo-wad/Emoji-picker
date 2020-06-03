@@ -15,11 +15,12 @@ app.use(session({
   secret: 'My secret is ITMO WAD'
 }));
 
-const routes = require('./api/routes/routes'),
-      TelegramBot = require('./api/api/telegram');
+const routes = require('./api/routes/routes');
 
 routes(app);
 
 app.listen(port);
 
 console.log('Emoji-picker REST API started on:' + port);
+
+const TelegramBot = require('./api/api/telegram');  

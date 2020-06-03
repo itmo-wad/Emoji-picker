@@ -18,3 +18,11 @@ exports.local_database = function () {
   //Discordmojis += Object.keys(Discordmoji['emoji']).join(' ');
   return local_database;
 }
+
+exports.generate_keyboard = function () {
+  let emoji_keyboard = [];
+
+  for (let i = 0; i < Object.values(local_database).length; i+=11)
+    emoji_keyboard.push(Object.values(local_database).slice(i, i+11));
+  return emoji_keyboard;
+}

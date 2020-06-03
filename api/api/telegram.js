@@ -4,6 +4,7 @@ process.env.NTBA_FIX_319 = 1;
 const Emojis = require('../modules/emoji.js'),
       EmojiKeyboard = Emojis.generate_keyboard(),
       TelegramBot = require('node-telegram-bot-api'),
+      Credentials = require('./credentials').Telegram(),
       URL = "https://risibank.fr/cache/stickers/d899/89948-full.png";
 
 
@@ -13,8 +14,7 @@ function emojiser(input = undefined) {
 }
 
 (function () {
-  const token = '1219145096:AAG9WWHVSrXUOM41hD6wOSBaVgPVrCORrMM';
-  const bot = new TelegramBot(token, {polling: true});
+  const bot = new TelegramBot(Credentials, {polling: true});
 
   bot.onText(/\/emojis/, (message) => {
     if (message.text.length > 8)

@@ -18,12 +18,18 @@ function emojiser(input = undefined) {
 
   bot.onText(/\/emojis/, (message) => {
     if (message.text.length > 8)
-      bot.sendMessage(message.chat.id, emojiser(`"${message.text.substr(8)}"`));
+      if (message.text.substr(8).startsWith('pickmoji_bot'))
+        bot.sendMessage(message.chat.id, emojiser(`"${message.text.substr(21)}"`));
+      else
+        bot.sendMessage(message.chat.id, emojiser(`"${message.text.substr(8)}"`));
   });
 
   bot.onText(/\/search/, (message) => {
     if (message.text.length > 8)
-      bot.sendMessage(message.chat.id, (Emojis.local_database()[message.text.substr(8).slice(1, -1)] || "Emoji not found!"));
+      if (message.text.substr(8).startsWith('pickmoji_bot'))
+        bot.sendMessage(message.chat.id, (Emojis.local_database()[message.text.substr(21).slice(1, -1)] || "Emoji not found!"));
+      else
+        bot.sendMessage(message.chat.id, (Emojis.local_database()[message.text.substr(8).slice(1, -1)] || "Emoji not found!"));
   });
 
   bot.onText(/\/list/, (message) => {

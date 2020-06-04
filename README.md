@@ -22,14 +22,14 @@ You need to call the bot name @pickmoji_bot on telegram.
 # RESTFul API #
 
 ## How to use ##
-Go on `INSERT_ADDRESS_HERE/` and specify the parameter `?input=""` with the text you want to format with emoji between quotes.  
-To works, the words you want to convert to emoji need to be encapsulate via `:` like the following ` I love :duck:`.  
-You should get in output the sentence you gave with the appropriate emoji inside.  
-If multiple emoji exists, you'll get multiple sentence with different combination of emojis.
+On address `34.72.210.191` you can use the following route:
+- `/:`&nbsp;&nbsp;Change in the parameter '?input=""' every words surrounded by ':' to their corresponding emoji if exist.
+- `/search:`&nbsp;&nbsp;Search specific emoji with parameter '?word=""'
+- `/list:`&nbsp;&nbsp;List all available emojis.
 
 ## Feature ##
 - [x] NodeJS RestAPI backend
-  - [x] `/request`
+  - [x] `/`
         Method GET:  
         - parameter: ?input="text with requested :emoji:"
         - return: the formatted sentence with emojis

@@ -1,5 +1,5 @@
 'use strict';
-const port = 5000,
+const port = 80,
       app = require('express')(),
       bodyParser = require('body-parser'),
       session = require('express-session');
@@ -21,6 +21,6 @@ routes(app);
 
 app.listen(port);
 
-console.log('Emoji-picker REST API started on:' + port);
+console.log(`Emoji-picker REST API started on: ${port}`);
 
-const TelegramBot = require('./api/api/telegram');  
+const TelegramBot = require('./api/api/telegram');

@@ -14,6 +14,7 @@ function emojiser(input = undefined) {
 }
 
 (function () {
+  let index = 0;
   const bot = new TelegramBot(Credentials, {polling: true});
 
   bot.onText(/\/emojis/, (message) => {
@@ -27,14 +28,25 @@ function emojiser(input = undefined) {
   bot.onText(/\/search/, (message) => {
     if (message.text.length > 8)
       if (message.text.substr(8).startsWith('pickmoji_bot'))
-        bot.sendMessage(message.chat.id, (Emojis.local_database()[message.text.substr(21).slice(1, -1)] || "Emoji not found!"));
+        bot.sendMessage(message.chat.id, (Emojis.local_database()[message.text.substr(21)] || "Emoji not found!"));
       else
-        bot.sendMessage(message.chat.id, (Emojis.local_database()[message.text.substr(8).slice(1, -1)] || "Emoji not found!"));
+        bot.sendMessage(message.chat.id, (Emojis.local_database()[message.text.substr(8)] || "Emoji not found!"));
+  });
+
+  bot.onText(/^prev$/, (message) => {
+    index === 0 ? index = EmojiKeyboard.length - 1 : index--;
+    message.text = '/list';
+  });
+
+  bot.onText(/^next$/, (message) => {
+    index === EmojiKeyboard.length - 1 ? index = 0 : index++;
+    message.text = '/list';
   });
 
   bot.onText(/\/list/, (message) => {
-    bot.sendMessage(message.chat.id, "Opening emoji keyboard", {
-    "reply_markup": {"keyboard": EmojiKeyboard}});
+    bot.sendMessage(message.chat.id, `Opening emoji keyboard`, {
+      "reply_markup": {"keyboard": EmojiKeyboard[index]}
+    });
   });
 
   bot.onText(/\/test/, (message) => {
